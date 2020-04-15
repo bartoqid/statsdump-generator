@@ -18,4 +18,15 @@ def download_stats(firewall_ip, api_key, jobid):
 
     return size
 
+def download_tsf(firewall_ip, api_key, jobid):
+    values = {'type': 'export', 'category': 'tech-support', 'action': 'get', 'job-id': jobid, 'key': api_key}
+    call = 'https://%s/api/' % (firewall_ip)
+
+    response = requests.post(call, data=values, verify=False)
+
+    file = open(firewall_ip + "-" + currenttime + "-tsf.tgz", 'wb')
+    size = file.write(response.content)
+    file.close()
+
+    return size
 
